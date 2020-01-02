@@ -9,9 +9,13 @@
 # move said applications out of the umbrella.
 import Config
 
+# Configure Mix tasks and generators
+config :core,
+  ecto_repos: [Core.Repo]
+
 config :admin_web,
-  ecto_repos: [AdminWeb.Repo],
-  generators: [context_app: false]
+  ecto_repos: [Core.Repo],
+  generators: [context_app: :core]
 
 # Configures the endpoint
 config :admin_web, AdminWeb.Endpoint,
