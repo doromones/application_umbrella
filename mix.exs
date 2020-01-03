@@ -6,7 +6,16 @@ defmodule App.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+      ],
+      test_coverage: [
+        tool: ExCoveralls
+      ],
     ]
   end
 
@@ -16,6 +25,8 @@ defmodule App.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      {:excoveralls, "~> 0.5.7", only: :test}
+    ]
   end
 end
