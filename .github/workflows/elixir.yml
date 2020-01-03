@@ -61,6 +61,8 @@ jobs:
 
     - name: Compile
       run: mix compile
+      env:
+        MIX_ENV: test
 
     - name: Run Tests
       run: mix test
@@ -76,9 +78,9 @@ jobs:
 #        POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
     - name: Generate coverage report
-      run: |
-        MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json -u
+      run: mix do compile --warnings-as-errors, coveralls.json -u
       env:
+        MIX_ENV: test
         POSTGRES_HOST: postgres
         POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
