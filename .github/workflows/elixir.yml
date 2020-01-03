@@ -26,10 +26,28 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: Cache elixir deps
+      uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/deps
+        key: ${{ runner.os }}-elixir-deps-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-elixir-deps-
+          ${{ runner.os }}-
+
+    - name: Cache elixir _build
+      uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/_build
+        key: ${{ runner.os }}-elixir-build-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-elixir-build-
+          ${{ runner.os }}-
+
     - name: Install system dependencies
       run: |
         apt-get update
-        apt-get install -y wget gnupg git
+        apt-get install -y wget gnupg git curl
         wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
         echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
         apt-get update
@@ -40,6 +58,11 @@ jobs:
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
+
+    - name: Compile
+      run: mix compile
+      env:
+        MIX_ENV: test
 
     - name: Run Tests
       run: mix test
@@ -55,14 +78,14 @@ jobs:
 #        POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
     - name: Generate coverage report
-      run: |
-        MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json -u
+      run: mix do compile --warnings-as-errors, coveralls.json -u
       env:
+        MIX_ENV: test
         POSTGRES_HOST: postgres
         POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.2
+      uses: codecov/codecov-action@v1.0.5
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         file: ./cover/excoveralls.json
