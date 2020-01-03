@@ -29,7 +29,7 @@ jobs:
     - name: Cache elixir deps
       uses: actions/cache@v1
       with:
-        path: ~/deps
+        path: ${{ github.workspace }}/deps
         key: ${{ runner.os }}-elixir-deps-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-elixir-deps-
@@ -38,7 +38,7 @@ jobs:
     - name: Cache elixir _build
       uses: actions/cache@v1
       with:
-        path: ~/_build
+        path: ${{ github.workspace }}/_build
         key: ${{ runner.os }}-elixir-build-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-elixir-build-
@@ -85,7 +85,7 @@ jobs:
         POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.2
+      uses: codecov/codecov-action@v1
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         file: ./cover/excoveralls.json
