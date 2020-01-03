@@ -35,6 +35,15 @@ jobs:
           ${{ runner.os }}-elixir-deps-
           ${{ runner.os }}-
 
+    - name: Cache elixir _build
+      uses: actions/cache@v1
+      with:
+        path: ~/_build
+        key: ${{ runner.os }}-elixir-build-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-elixir-build-
+          ${{ runner.os }}-
+
     - name: Install system dependencies
       run: |
         apt-get update
@@ -49,6 +58,9 @@ jobs:
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
+
+    - name: Compile
+      run: mix compile
 
     - name: Run Tests
       run: mix test
