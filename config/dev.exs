@@ -21,11 +21,9 @@ config :admin_web, AdminWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
+    npm: [
+      "run",
+      "watch",
       cd: Path.expand("../apps/admin_web/assets", __DIR__)
     ]
   ]
