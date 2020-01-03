@@ -26,6 +26,15 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: Cache elixir deps
+      uses: actions/cache@v1
+      with:
+        path: ~/deps
+        key: ${{ runner.os }}-elixir-deps-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-elixir-deps-
+          ${{ runner.os }}-
+
     - name: Install system dependencies
       run: |
         apt-get update
