@@ -1,0 +1,11 @@
+.sidenav-container {
+  z-index: -1 !important;
+  min-height: 375px;
+  height: calc(100% - 128px)
+}
+
+@media(max-width: 599px) {
+  .sidenav-container {
+    height: calc(100% - 112px)
+  }
+}

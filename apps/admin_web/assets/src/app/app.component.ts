@@ -1,5 +1,4 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +7,4 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class AppComponent {
   title = 'assets';
-
-  @ViewChild('sidenav') sidenav: MatSidenav;
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (event.target.innerWidth < 500) {
-      this.sidenav.close();
-    } else {
-      this.sidenav.open();
-    }
-  }
 }
