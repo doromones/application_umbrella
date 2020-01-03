@@ -186,6 +186,13 @@
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-9.0.0-rc.7.tgz#842f37485244b77b1c104cadade2c82fb4cb3fac"
   integrity sha512-qn2lYImZNVzWOz8dR32Z9TTcW+nYX31H8Ckzn++xbL0x0W9iKg13GaNfaVJqnZI1pnzpRzzJdWXf5xQQQsKQsw==
 
+"@angular/flex-layout@^8.0.0-beta.27":
+  version "8.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-8.0.0-beta.27.tgz#a697d5a90e6d04c06b02ee872f88f384d1723f7c"
+  integrity sha512-qmpvQPesU4ZQ56IscwgmVRpK2UnyV+gwvXUql7TMv0QV215hLcHczjGsrKkLfW2By5E7XEyDat9br72uVXcPMw==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@~9.0.0-rc.7":
   version "9.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-9.0.0-rc.7.tgz#0b0bfd3d60c3456b4eb0f7bf1dfeec97d04458ba"
@@ -7368,7 +7375,7 @@ ts-node@~8.3.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-tslib@1.10.0, tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@1.10.0, tslib@^1.10.0, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==

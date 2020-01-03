@@ -7,6 +7,11 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
