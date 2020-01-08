@@ -9,6 +9,17 @@
 # move said applications out of the umbrella.
 import Config
 
+config :api_web,
+  ecto_repos: [Core.Repo],
+  generators: [context_app: false]
+
+# Configures the endpoint
+config :api_web, ApiWeb.Endpoint,
+  url: [host: "localhost"],
+  secret_key_base: "0pphRMl4qX7+dbMLzJGs04+adto4l2GE7XU+en8HLqitrYXfIxLgHygnANsY87vB",
+  render_errors: [view: ApiWeb.ErrorView, accepts: ~w(json)],
+  pubsub: [name: ApiWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+
 # Configure Mix tasks and generators
 config :core,
   ecto_repos: [Core.Repo]
