@@ -15,10 +15,10 @@
   <body class="mat-typography">
     <app-root></app-root>
 
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/runtime.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/polyfills.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/styles.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/vendor.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/main.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/runtime.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/polyfills.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/styles.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/vendor.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/main.js") %>"></script>
   </body>
 </html>
