@@ -16,7 +16,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
-import {PagesModule} from "./pages/pages.module";
+import { PagesModule } from "./pages/pages.module";
+import { CoreModule } from "./core/core.module";
 
 @NgModule({
   declarations: [
@@ -39,9 +40,11 @@ import {PagesModule} from "./pages/pages.module";
 
     FlexLayoutModule,
 
+    CoreModule,
     PagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
