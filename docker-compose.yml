@@ -5,6 +5,9 @@ services:
 
   web:
     build: .
+    image: docker.pkg.github.com/doromones/application_umbrella/server:latest
+#    command:
+#      - ./run.sh
     volumes:
       - type: bind
         source: .
@@ -13,5 +16,3 @@ services:
       - "4000:4000"
 #    depends_on:
 #      - db
-    command:
-      - ./run.sh
