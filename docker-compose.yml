@@ -1,18 +1,15 @@
 version: '3.2'
 services:
-#  db:
-#    image: postgres
-
   web:
     build: .
     image: doromones/application_umbrella/server:latest
-#    command:
-#      - ./run.sh
+    command: mix phx.server
     volumes:
-      - type: bind
-        source: .
-        target: /app
+      - .:/home/app
     ports:
       - "4000:4000"
-#    depends_on:
-#      - db
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres
