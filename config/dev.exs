@@ -5,7 +5,7 @@ config :core, Core.Repo,
   username: "postgres",
   password: "postgres",
   database: "application_core_dev",
-  hostname: "localhost",
+  hostname: "postgresql",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
