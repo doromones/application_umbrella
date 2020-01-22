@@ -34,7 +34,7 @@ defmodule App.MixProject do
   defp aliases do
     [
       "app.setup.yarn": [&yarn_install/1],
-      "app.setup": ["deps.get", "app.setup.yarn"]
+      "app.setup": ["deps.get", "deps.compile", "app.setup.yarn"]
     ]
   end
 
