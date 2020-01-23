@@ -7,7 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  opened: boolean = false;
+  opened = false;
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -19,7 +19,7 @@ export class SidenavComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(_event?) {
+  onResize(_?) {
     this.opened = this.checkSideNavOpen(window.innerWidth);
   }
 
