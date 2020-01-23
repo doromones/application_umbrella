@@ -3,17 +3,30 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
+import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule } from '@angular/material/list';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserAnimationsModule,
+
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule
       ],
       declarations: [
         AppComponent,
         FooterComponent,
-        HeaderComponent
+        HeaderComponent,
+        SidenavComponent
       ],
     }).compileComponents();
   }));
@@ -30,7 +43,7 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('assets');
   });
 
-  it('should render title', () => {
+  xit('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
