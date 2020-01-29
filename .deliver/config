@@ -2,7 +2,11 @@ APP="application_umbrella"
 
 BUILD_HOST="virtualbox"
 BUILD_USER="user"
-BUILD_AT="/home/user/edeliver/application_umbrella"
+BUILD_AT="/home/user/edeliver/build/application_umbrella"
+
+STAGING_HOSTS="virtualbox"
+STAGING_USER="user"
+TEST_AT="/home/user/edeliver/build_apps/"
 
 #if [[ "$APP" = "admin_web" ]]; then
 #  BUILD_AT="${BUILD_AT}/apps/${APP}"
@@ -30,3 +34,22 @@ BUILD_AT="/home/user/edeliver/application_umbrella"
 #git_push() {
 #    echo "disable git push"
 #}
+
+pre_erlang_clean_compile() {
+    phoenix_digest 'admin_web'
+}
+
+phoenix_digest(){
+    app=$1
+
+    status "Running phoenix.digest for ${app}" # log output prepended with "----->"
+    __sync_remote " # runs the commands on the build host
+      [ -f ~/.profile ] && source ~/.profile # load profile (optional)
+      set -e # fail if any command fails (recommended)
+      cd "$BUILD_AT/apps/${app}"
+      # prepare something
+      mkdir -p priv/static # required by the phx.digest task
+      # run your custom task
+      APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phx.digest $SILENCE
+    "
+}
