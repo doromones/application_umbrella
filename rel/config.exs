@@ -60,6 +60,7 @@ release :admin_web do
   set version: "0.1.0"
   set applications: [
         :runtime_tools,
-        admin_web: :permanent
+        admin_web: :permanent,
+        core: :permanent
       ]
 end
