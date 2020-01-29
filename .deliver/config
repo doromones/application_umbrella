@@ -1,30 +1,32 @@
-[ -z "$APP" ] && APP="application_umbrella"
-
-echo "APP name ${APP}"
+APP="application_umbrella"
 
 BUILD_HOST="virtualbox"
 BUILD_USER="user"
 BUILD_AT="/home/user/edeliver/application_umbrella"
 
-if [[ "$APP" = "admin_web" ]]; then
-  BUILD_AT="${BUILD_AT}/apps/${APP}"
-fi
+#if [[ "$APP" = "admin_web" ]]; then
+#  BUILD_AT="${BUILD_AT}/apps/${APP}"
+#fi
 
 # set the build directory to the umbrella project dir
-pre_init_app_remotely() {
-  [[ "$APP" = "admin_web" ]] && set_git_project_directory
-}
+#pre_init_app_remotely() {
+#  [[ "$APP" = "admin_web" ]] && set_git_project_directory
+#}
 
 # reset the build directory
-pre_erlang_get_and_update_deps() {
-  [[ "$APP" = "admin_web" ]] && restore_build_directory
-}
+#pre_erlang_get_and_update_deps() {
+#  [[ "$APP" = "admin_web" ]] && restore_build_directory
+#}
 
-set_git_project_directory() {
-  ACTUAL_PROJECT_DIR="$DELIVER_TO"
-  DELIVER_TO="$(dirname $DELIVER_TO)"
-}
+#set_git_project_directory() {
+#  ACTUAL_PROJECT_DIR="$DELIVER_TO"
+#  DELIVER_TO="$(dirname $DELIVER_TO)"
+#}
 
-restore_build_directory() {
-  DELIVER_TO="$ACTUAL_PROJECT_DIR"
-}
+#restore_build_directory() {
+#  DELIVER_TO="$ACTUAL_PROJECT_DIR"
+#}
+
+#git_push() {
+#    echo "disable git push"
+#}
