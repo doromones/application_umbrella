@@ -6,6 +6,10 @@ BUILD_HOST="virtualbox"
 BUILD_USER="user"
 BUILD_AT="/home/user/edeliver/application_umbrella"
 
+if [[ "$APP" = "admin_web" ]]; then
+  BUILD_AT="${BUILD_AT}/apps/${APP}"
+fi
+
 # set the build directory to the umbrella project dir
 pre_init_app_remotely() {
   [[ "$APP" = "my-umbrella-app" ]] && set_git_project_directory
