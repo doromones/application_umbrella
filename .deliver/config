@@ -16,7 +16,6 @@ pre_erlang_get_and_update_deps() {
 set_git_project_directory() {
   ACTUAL_PROJECT_DIR="$DELIVER_TO"
   DELIVER_TO="$(dirname $DELIVER_TO)"
-  DELIVER_TO="$(dirname $DELIVER_TO)"
 }
 
 restore_build_directory() {
