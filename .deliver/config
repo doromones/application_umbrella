@@ -36,6 +36,7 @@ TEST_AT="/home/user/edeliver/build_apps/"
 #}
 
 pre_erlang_clean_compile() {
+    assets_build 'admin_web'
     phoenix_digest 'admin_web'
 }
 
@@ -51,5 +52,19 @@ phoenix_digest(){
       mkdir -p priv/static # required by the phx.digest task
       # run your custom task
       APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phx.digest $SILENCE
+    "
+}
+
+assets_build(){
+    app=$1
+
+    status "Running assets install for ${app}" # log output prepended with "----->"
+    __sync_remote " # runs the commands on the build host
+      [ -f ~/.profile ] && source ~/.profile # load profile (optional)
+      set -e # fail if any command fails (recommended)
+      cd "$BUILD_AT/apps/${app}/assets"
+      # prepare something
+      yarn install $SILENCE
+      yarn run build $SILENCE
     "
 }
