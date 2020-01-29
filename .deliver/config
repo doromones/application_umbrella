@@ -12,12 +12,12 @@ fi
 
 # set the build directory to the umbrella project dir
 pre_init_app_remotely() {
-  [[ "$APP" = "my-umbrella-app" ]] && set_git_project_directory
+  [[ "$APP" = "admin_web" ]] && set_git_project_directory
 }
 
 # reset the build directory
 pre_erlang_get_and_update_deps() {
-  [[ "$APP" = "my-umbrella-app" ]] && restore_build_directory
+  [[ "$APP" = "admin_web" ]] && restore_build_directory
 }
 
 set_git_project_directory() {
