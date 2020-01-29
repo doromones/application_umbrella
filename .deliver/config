@@ -1,4 +1,6 @@
-APP="application_umbrella"
+[ -z "$APP" ] && APP="application_umbrella"
+
+echo "APP name ${APP}"
 
 BUILD_HOST="virtualbox"
 BUILD_USER="user"
