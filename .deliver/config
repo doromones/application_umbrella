@@ -1,0 +1,24 @@
+
+BUILD_HOST="virtualbox"
+BUILD_USER="user"
+BUILD_AT="/home/user/edeliver/application_umbrella"
+
+# set the build directory to the umbrella project dir
+pre_init_app_remotely() {
+  [[ "$APP" = "my-umbrella-app" ]] && set_git_project_directory
+}
+
+# reset the build directory
+pre_erlang_get_and_update_deps() {
+  [[ "$APP" = "my-umbrella-app" ]] && restore_build_directory
+}
+
+set_git_project_directory() {
+  ACTUAL_PROJECT_DIR="$DELIVER_TO"
+  DELIVER_TO="$(dirname $DELIVER_TO)"
+  DELIVER_TO="$(dirname $DELIVER_TO)"
+}
+
+restore_build_directory() {
+  DELIVER_TO="$ACTUAL_PROJECT_DIR"
+}

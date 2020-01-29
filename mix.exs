@@ -23,11 +23,21 @@ defmodule App.MixProject do
   # Dependencies listed here are available only for this
   # project and cannot be accessed from applications inside
   # the apps folder.
-  #
+
+  def application do
+    [
+      applications: [
+        :edeliver
+      ]
+    ]
+  end
+
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:excoveralls, "~> 0.5.7", only: :test}
+      {:excoveralls, "~> 0.5.7", only: :test},
+      {:edeliver, ">= 1.6.0"},
+      {:distillery, "~> 2.1", warn_missing: false},
     ]
   end
 
