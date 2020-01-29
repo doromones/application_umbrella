@@ -10,7 +10,7 @@
 use Distillery.Releases.Config,
     # This sets the default release built by `mix distillery.release`
     default_release: :default,
-    # This sets the default environment used by `mix distillery.release`
+      # This sets the default environment used by `mix distillery.release`
     default_environment: Mix.env()
 
 # For a full list of config options for both releases
@@ -49,10 +49,17 @@ end
 release :application_umbrella do
   set version: "0.1.0"
   set applications: [
-    :runtime_tools,
-    admin_web: :permanent,
-    api_web: :permanent,
-    core: :permanent
-  ]
+        :runtime_tools,
+        admin_web: :permanent,
+        api_web: :permanent,
+        core: :permanent
+      ]
 end
 
+release :admin_web do
+  set version: "0.1.0"
+  set applications: [
+        :runtime_tools,
+        admin_web: :permanent
+      ]
+end
