@@ -1,3 +1,4 @@
+APP="application_umbrella"
 
 BUILD_HOST="virtualbox"
 BUILD_USER="user"
