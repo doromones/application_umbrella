@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "application" do |machine|
+    machine.vm.box = "ubuntu/bionic64"
+    machine.vm.hostname = "application"
+    machine.vm.network :private_network, ip: "192.168.33.10"
+    machine.vm.provider "virtualbox" do |v|
+      v.name = "application"
+      v.customize ["modifyvm", :id, "--memory", 256]
+    end
+
+    host_vars = {
+      'application' => {
+        TEST_ENV_VAR: 'TEST_ENV_VAR'
+      }
+    }
+
+    config.vm.provision 'ansible' do |ansible|
+      ansible.host_vars = host_vars
+      ansible.playbook = '000-provision.yml'
+    end
+  end
+
+end
