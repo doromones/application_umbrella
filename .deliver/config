@@ -22,6 +22,8 @@ pre_erlang_clean_compile() {
     status "TARGET_MIX_ENV=${TARGET_MIX_ENV}"
     assets_build 'admin_web'
     phoenix_digest 'admin_web'
+
+    phoenix_digest 'api_web'
 }
 
 
