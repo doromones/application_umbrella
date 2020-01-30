@@ -1,45 +1,32 @@
 APP="application_umbrella"
 
+BUILD_ROOT="/home/user/edeliver"
+
 BUILD_HOST="virtualbox"
 BUILD_USER="user"
-BUILD_AT="/home/user/edeliver/build/application_umbrella"
+BUILD_AT="$BUILD_ROOT/build/$APP"
 
 STAGING_HOSTS="virtualbox"
 STAGING_USER="user"
-TEST_AT="/home/user/edeliver/build_apps/"
+TEST_AT="$BUILD_ROOT/build_apps/"
 
-#if [[ "$APP" = "admin_web" ]]; then
-#  BUILD_AT="${BUILD_AT}/apps/${APP}"
-#fi
 
-# set the build directory to the umbrella project dir
-#pre_init_app_remotely() {
-#  [[ "$APP" = "admin_web" ]] && set_git_project_directory
-#}
+##########################################################
 
-# reset the build directory
-#pre_erlang_get_and_update_deps() {
-#  [[ "$APP" = "admin_web" ]] && restore_build_directory
-#}
 
-#set_git_project_directory() {
-#  ACTUAL_PROJECT_DIR="$DELIVER_TO"
-#  DELIVER_TO="$(dirname $DELIVER_TO)"
-#}
-
-#restore_build_directory() {
-#  DELIVER_TO="$ACTUAL_PROJECT_DIR"
-#}
-
-#git_push() {
-#    echo "disable git push"
-#}
+pre_erlang_get_and_update_deps() {
+  copy_prod_secret
+}
 
 pre_erlang_clean_compile() {
     status "TARGET_MIX_ENV=${TARGET_MIX_ENV}"
     assets_build 'admin_web'
     phoenix_digest 'admin_web'
 }
+
+
+##########################################################
+
 
 phoenix_digest(){
     app=$1
@@ -68,4 +55,16 @@ assets_build(){
       yarn install $SILENCE
       yarn run build $SILENCE
     "
+}
+
+copy_prod_secret(){
+  local _prod_secret_path="$BUILD_ROOT/shared_config/prod.secret.exs"
+  local _prod_secret_path_to="$BUILD_AT/config/prod.secret.exs"
+
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+      status "Create symlink $_prod_secret_path to $_prod_secret_path_to"
+    __sync_remote "
+      ln -sfn '$_prod_secret_path' '$_prod_secret_path_to'
+    "
+  fi
 }
