@@ -24,6 +24,4 @@ erl_crash.dump
 /.idea
 .deliver/releases/
 
-.vagrant/
-ansible/*.retry
-ansible/*.log
+
