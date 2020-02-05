@@ -2,18 +2,23 @@
 <html lang="en">
   <head>
     <base href="/">
+    <link rel="icon" type="image/x-icon" href="/js/favicon.ico">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <title>AdminWeb · Phoenix Framework</title>
   </head>
-  <body>
+  <body class="mat-typography">
     <app-root></app-root>
 
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/runtime.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/polyfills.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/styles.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/vendor.js") %>"></script>
-    <script type="module" src="<%= Routes.static_path(@conn, "/js/main.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/runtime.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/polyfills.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/styles.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/vendor.js") %>"></script>
+    <script type="module" src="<%= Routes.static_path(@conn, "/main.js") %>"></script>
   </body>
 </html>

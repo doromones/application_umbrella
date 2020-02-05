@@ -1,0 +1,41 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name admin.server.dev, api.server.dev;
+
+    return 301 https://$host$request_uri;
+}
+
+upstream server_admin {
+    server localhost:4000;
+}
+
+upstream server_api {
+    server localhost:4002;
+}
+
+# for upstream server
+server {
+    server_name admin.server.dev;
+
+    include /home/user/Projects/Elixir/application_umbrella/nginx/dev/mixins/ssl_config.nginx;
+
+    # besides referencing the extracted upstream this stays the same
+    location / {
+        include /home/user/Projects/Elixir/application_umbrella/nginx/dev/mixins/location.nginx;
+        proxy_pass http://server_admin;
+    }
+}
+
+# for upstream api
+server {
+    server_name api.server.dev;
+
+    include /home/user/Projects/Elixir/application_umbrella/nginx/dev/mixins/ssl_config.nginx;
+
+    # besides referencing the extracted upstream this stays the same
+    location / {
+        include /home/user/Projects/Elixir/application_umbrella/nginx/dev/mixins/location.nginx;
+        proxy_pass http://server_api;
+    }
+}
