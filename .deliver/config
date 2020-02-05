@@ -23,7 +23,7 @@ pre_erlang_get_and_update_deps() {
 }
 
 pre_erlang_clean_compile() {
-    status "TARGET_MIX_ENV=${TARGET_MIX_ENV}"
+
     assets_build 'admin_web'
     phoenix_digest 'admin_web'
 
@@ -52,10 +52,8 @@ phoenix_digest(){
 assets_build(){
     app=$1
 
-    # symlink_node_modules "$app"
-
-    local _node_modules_path="$BUILD_ROOT/shared_config/apps/$app/assets/node_modules"
     local _assets_path="$BUILD_AT/apps/${app}/assets"
+
     status "Running 'yarn install' for ${app}"
     __sync_remote "
       [ -f /etc/profile ] && source /etc/profile
@@ -64,9 +62,7 @@ assets_build(){
       set -e # fail if any command fails (recommended)
       cd '$_assets_path'
 
-      mkdir -p '$_node_modules_path'
-
-      yarn install --modules-folder '$_node_modules_path'
+      yarn install
     "
 
     status "Running 'yarn run build' for ${app}"
@@ -78,7 +74,7 @@ assets_build(){
 
       cd '$_assets_path'
 
-      yarn run build --modules-folder '$_node_modules_path'
+      yarn run build
     "
 }
 
@@ -96,20 +92,3 @@ symlink_prod_secret(){
   fi
 }
 
-symlink_node_modules(){
-  app=$1
-
-  local _node_modules_path="$BUILD_ROOT/shared_config/node_modules/$app/"
-  local _node_modules_path_to="$BUILD_AT/apps/$app/assets/node_modules"
-
-  if [ "$TARGET_MIX_ENV" = "prod" ]; then
-      status "Create symlink $_node_modules_path to $_node_modules_path_to"
-    __sync_remote "
-      set -e
-
-      mkdir -p '$_node_modules_path'
-
-      ln -sfn '$_node_modules_path' '$_node_modules_path_to'
-    "
-  fi
-}
