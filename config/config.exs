@@ -9,31 +9,56 @@
 # move said applications out of the umbrella.
 import Config
 
+config :application,
+       env: Mix.env
+
 config :api_web,
-  ecto_repos: [Core.Repo],
-  generators: [context_app: false]
+       ecto_repos: [Core.Repo],
+       generators: [
+         context_app: false
+       ]
 
 # Configures the endpoint
-config :api_web, ApiWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "0pphRMl4qX7+dbMLzJGs04+adto4l2GE7XU+en8HLqitrYXfIxLgHygnANsY87vB",
-  render_errors: [view: ApiWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: ApiWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+config :api_web,
+       ApiWeb.Endpoint,
+       url: [
+         host: "localhost"
+       ],
+       secret_key_base: "0pphRMl4qX7+dbMLzJGs04+adto4l2GE7XU+en8HLqitrYXfIxLgHygnANsY87vB",
+       render_errors: [
+         view: ApiWeb.ErrorView,
+         accepts: ~w(json)
+       ],
+       pubsub: [
+         name: ApiWeb.PubSub,
+         adapter: Phoenix.PubSub.PG2
+       ]
 
 # Configure Mix tasks and generators
 config :core,
-  ecto_repos: [Core.Repo]
+       ecto_repos: [Core.Repo]
 
 config :admin_web,
-  ecto_repos: [Core.Repo],
-  generators: [context_app: :core]
+       ecto_repos: [Core.Repo],
+       generators: [
+         context_app: :core
+       ]
 
 # Configures the endpoint
-config :admin_web, AdminWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "tAH0sSjaxvMWiYz5Z2b7Mq7zWV/kSI3uDc2soSGOLwW4nCAiTSXpHT2v7duNGdDj",
-  render_errors: [view: AdminWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: AdminWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+config :admin_web,
+       AdminWeb.Endpoint,
+       url: [
+         host: "localhost"
+       ],
+       secret_key_base: "tAH0sSjaxvMWiYz5Z2b7Mq7zWV/kSI3uDc2soSGOLwW4nCAiTSXpHT2v7duNGdDj",
+       render_errors: [
+         view: AdminWeb.ErrorView,
+         accepts: ~w(html json)
+       ],
+       pubsub: [
+         name: AdminWeb.PubSub,
+         adapter: Phoenix.PubSub.PG2
+       ]
 
 # Sample configuration:
 #
@@ -44,9 +69,10 @@ config :admin_web, AdminWeb.Endpoint,
 #
 
 # Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+config :logger,
+       :console,
+       format: "$time $metadata[$level] $message\n",
+       metadata: [:request_id]
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

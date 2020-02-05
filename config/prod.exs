@@ -94,3 +94,5 @@ config :api_web, ApiWeb.Endpoint,
 # to something meaningful, Phoenix uses this information
 # when generating URLs.
 #
+
+import_config "prod.secret.exs"

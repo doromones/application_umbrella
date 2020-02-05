@@ -1,0 +1,72 @@
+APP="application_umbrella"
+
+BUILD_ROOT="/home/user/edeliver"
+
+BUILD_HOST="virtualbox"
+BUILD_USER="user"
+BUILD_AT="$BUILD_ROOT/build/$APP"
+
+STAGING_HOSTS="virtualbox"
+STAGING_USER="user"
+TEST_AT="$BUILD_ROOT/build_apps/"
+
+
+##########################################################
+
+
+pre_erlang_get_and_update_deps() {
+  copy_prod_secret
+}
+
+pre_erlang_clean_compile() {
+    status "TARGET_MIX_ENV=${TARGET_MIX_ENV}"
+    assets_build 'admin_web'
+    phoenix_digest 'admin_web'
+
+    phoenix_digest 'api_web'
+}
+
+
+##########################################################
+
+
+phoenix_digest(){
+    app=$1
+
+    status "Running phoenix.digest for ${app}" # log output prepended with "----->"
+    __sync_remote " # runs the commands on the build host
+      [ -f ~/.profile ] && source ~/.profile # load profile (optional)
+      set -e # fail if any command fails (recommended)
+      cd "$BUILD_AT/apps/${app}"
+      # prepare something
+      mkdir -p priv/static # required by the phx.digest task
+      # run your custom task
+      APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phx.digest $SILENCE
+    "
+}
+
+assets_build(){
+    app=$1
+
+    status "Running assets install for ${app}" # log output prepended with "----->"
+    __sync_remote " # runs the commands on the build host
+      [ -f ~/.profile ] && source ~/.profile # load profile (optional)
+      set -e # fail if any command fails (recommended)
+      cd "$BUILD_AT/apps/${app}/assets"
+      # prepare something
+      yarn install $SILENCE
+      yarn run build $SILENCE
+    "
+}
+
+copy_prod_secret(){
+  local _prod_secret_path="$BUILD_ROOT/shared_config/prod.secret.exs"
+  local _prod_secret_path_to="$BUILD_AT/config/prod.secret.exs"
+
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+      status "Create symlink $_prod_secret_path to $_prod_secret_path_to"
+    __sync_remote "
+      ln -sfn '$_prod_secret_path' '$_prod_secret_path_to'
+    "
+  fi
+}

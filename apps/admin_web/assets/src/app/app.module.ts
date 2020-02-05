@@ -16,8 +16,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
-import { PagesModule } from "./pages/pages.module";
-import { CoreModule } from "./core/core.module";
+import { PagesModule } from './pages/pages.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [

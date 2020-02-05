@@ -1,0 +1,21 @@
+---
+- name: Make sure HTTPS is supported by apt
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add an Apt signing key for
+  apt_key:
+    url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+    state: present
+
+- name: Add repository erlang solution
+  apt_repository:
+    repo: deb http://binaries.erlang-solutions.com/debian bionic contrib
+    state: present
+    filename: erlang-solutions.list
+
+- name: Install erlang
+  apt:
+    name: erlang=1:22.2.5-1
+    state: present
