@@ -1,0 +1,10 @@
+---
+- name: Install python 2
+  hosts: application
+  become: yes
+  gather_facts: no
+  pre_tasks:
+    - name: apt update
+      raw: sudo apt-get -y update
+    - name: 'install python2'
+      raw: sudo apt-get -y install python

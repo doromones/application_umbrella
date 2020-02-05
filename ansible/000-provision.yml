@@ -2,12 +2,18 @@
 - name: Base provision
   hosts: application
   become: yes
-  gather_facts: no
-  pre_tasks:
-    - name: apt update
-      raw: sudo apt-get -y update
-    - name: 'install python2'
-      raw: sudo apt-get -y install python
+  vars:
+    nodejs_version: "12.x"
+    nodejs_npm_global_packages:
+      - 'yarn'
+      - '@angular/cli'
   roles:
     - { role: erlang, tags: erlang }
     - { role: elixir, tags: elixir }
+    - geerlingguy.nodejs
+  tasks:
+    - include_tasks: "tasks/vagrant_env.yml"
+#    - name: Add nodejs bin dir to $PATH.
+#      copy:
+#        dest: /etc/profile.d/nodejs-bins-path.sh
+#        content: 'PATH=$PATH:/usr/local/lib/npm/bin/'

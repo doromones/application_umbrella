@@ -1,13 +1,17 @@
+# mix edeliver build release
+# mix edeliver deploy release to staging
+# mix edeliver restart staging
+
 APP="application_umbrella"
 
-BUILD_ROOT="/home/user/edeliver"
+BUILD_ROOT="/home/vagrant/edeliver"
 
-BUILD_HOST="virtualbox"
-BUILD_USER="user"
+BUILD_HOST="vagrant_application_umbrella"
+BUILD_USER="vagrant"
 BUILD_AT="$BUILD_ROOT/build/$APP"
 
-STAGING_HOSTS="virtualbox"
-STAGING_USER="user"
+STAGING_HOSTS="vagrant_application_umbrella"
+STAGING_USER="vagrant"
 TEST_AT="$BUILD_ROOT/build_apps/"
 
 
@@ -15,7 +19,7 @@ TEST_AT="$BUILD_ROOT/build_apps/"
 
 
 pre_erlang_get_and_update_deps() {
-  copy_prod_secret
+  symlink_prod_secret
 }
 
 pre_erlang_clean_compile() {
@@ -48,25 +52,64 @@ phoenix_digest(){
 assets_build(){
     app=$1
 
-    status "Running assets install for ${app}" # log output prepended with "----->"
-    __sync_remote " # runs the commands on the build host
-      [ -f ~/.profile ] && source ~/.profile # load profile (optional)
+    # symlink_node_modules "$app"
+
+    local _node_modules_path="$BUILD_ROOT/shared_config/apps/$app/assets/node_modules"
+    local _assets_path="$BUILD_AT/apps/${app}/assets"
+    status "Running 'yarn install' for ${app}"
+    __sync_remote "
+      [ -f /etc/profile ] && source /etc/profile
+      [ -f ~/.profile ] && source ~/.profile
+
       set -e # fail if any command fails (recommended)
-      cd "$BUILD_AT/apps/${app}/assets"
-      # prepare something
-      yarn install $SILENCE
-      yarn run build $SILENCE
+      cd '$_assets_path'
+
+      mkdir -p '$_node_modules_path'
+
+      yarn install --modules-folder '$_node_modules_path'
+    "
+
+    status "Running 'yarn run build' for ${app}"
+    __sync_remote "
+      [ -f /etc/profile ] && source /etc/profile
+      [ -f ~/.profile ] && source ~/.profile
+
+      set -e
+
+      cd '$_assets_path'
+
+      yarn run build --modules-folder '$_node_modules_path'
     "
 }
 
-copy_prod_secret(){
+symlink_prod_secret(){
   local _prod_secret_path="$BUILD_ROOT/shared_config/prod.secret.exs"
   local _prod_secret_path_to="$BUILD_AT/config/prod.secret.exs"
 
   if [ "$TARGET_MIX_ENV" = "prod" ]; then
       status "Create symlink $_prod_secret_path to $_prod_secret_path_to"
     __sync_remote "
+      set -e
+
       ln -sfn '$_prod_secret_path' '$_prod_secret_path_to'
+    "
+  fi
+}
+
+symlink_node_modules(){
+  app=$1
+
+  local _node_modules_path="$BUILD_ROOT/shared_config/node_modules/$app/"
+  local _node_modules_path_to="$BUILD_AT/apps/$app/assets/node_modules"
+
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+      status "Create symlink $_node_modules_path to $_node_modules_path_to"
+    __sync_remote "
+      set -e
+
+      mkdir -p '$_node_modules_path'
+
+      ln -sfn '$_node_modules_path' '$_node_modules_path_to'
     "
   fi
 }

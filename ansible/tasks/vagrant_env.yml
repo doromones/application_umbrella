@@ -1,0 +1,7 @@
+---
+- name: Copy prod.secret.exs
+  copy:
+    src: vagrant/prod.secret.exs
+    dest: /home/vagrant/edeliver/shared_config/
+    owner: vagrant
+    group: vagrant
